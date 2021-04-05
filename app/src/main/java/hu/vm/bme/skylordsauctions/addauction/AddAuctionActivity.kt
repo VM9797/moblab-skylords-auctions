@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class AddAuctionActivity : AppCompatActivity(), AddAuctionView {
     @Inject
-    private lateinit var presenter: AddAuctionPresenter
+    lateinit var presenter: AddAuctionPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
