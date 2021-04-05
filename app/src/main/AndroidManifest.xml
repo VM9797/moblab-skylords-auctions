@@ -3,12 +3,16 @@
     package="hu.vm.bme.skylordsauctions">
 
     <application
+        android:name=".SkylordsApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkylordsAuctions">
+        <activity android:name=".addauction.AddAuctionActivity"></activity>
+        <activity android:name=".auctions.AuctionsActivity" />
+        <activity android:name=".carddetails.CardDetailsActivity" />
         <activity android:name=".cardlist.CardListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
