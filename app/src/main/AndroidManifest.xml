@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkylordsAuctions">
-        <activity android:name=".auctions.AuctionsActivity"></activity>
+        <activity android:name=".addauction.AddAuctionActivity"></activity>
+        <activity android:name=".auctions.AuctionsActivity" />
         <activity android:name=".carddetails.CardDetailsActivity" />
         <activity android:name=".cardlist.CardListActivity">
             <intent-filter>
