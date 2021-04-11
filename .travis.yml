@@ -1,0 +1,26 @@
+language: android
+script: ./gradlew :app:build
+android:
+  components:
+    - build-tools-30.0.3
+    - android-28
+    - android-30
+    - android-21
+    - add-on
+    - extra
+    - platform-tools
+    - tools
+    - extra-google-googleplayservices
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - addon-google_apis-google-28
+    - addon-google_apis-google-30
+    - sys-img-armeabi-v7a-android-21
+before_install:
+  - yes | sdkmanager "platforms;android-30"
+notifications:
+  email:
+    recipients:
+      - m.villanyi97@gmail.com
+    on_success: always
+    on_failure: always
