@@ -1,14 +1,16 @@
 package hu.vm.bme.skylordsauctions.cardlist
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import hu.vm.bme.skylordsauctions.R
-import hu.vm.bme.skylordsauctions.mvp.MvpActivity
-import hu.vm.bme.skylordsauctions.mvp.MvpView
-import hu.vm.bme.skylordsauctions.mvp.Presenter
+import hu.vm.bme.skylordsauctions.network.cardbase.model.Card
+import hu.vm.bme.skylordsauctions.network.smj.SmjApi
+import hu.vm.bme.skylordsauctions.network.smj.model.NoteworthyPrices
 import hu.vm.bme.skylordsauctions.util.injector
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CardListActivity: AppCompatActivity(), CardListView {
@@ -21,10 +23,20 @@ class CardListActivity: AppCompatActivity(), CardListView {
         setContentView(R.layout.activity_main)
         injector.inject(this)
         cardListPresenter.attachView(this)
+        cardListPresenter.loadAllCards()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         cardListPresenter.detachView()
+    }
+
+    override fun logPriceInfo(noteworthyPrices: NoteworthyPrices) {
+        Log.i("Skylords", noteworthyPrices.toString())
+    }
+
+    override fun displayCardInfo(card: Card) {
+        Log.i("Skylords", card.image?.name ?: "No name")
+        cardListPresenter.getNoteworthyPricesForCard(card)
     }
 }

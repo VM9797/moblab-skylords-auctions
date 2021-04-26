@@ -1,0 +1,149 @@
+openapi: 3.0.0
+info:
+  title: Cardbase
+  version: '1.0'
+servers:
+  - url: 'https://cardbase.skylords.eu/Cards'
+paths:
+  /GetCards:
+    get:
+      summary: Get all cards
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CardbaseResult'
+      operationId: get-GetCards
+components:
+  schemas:
+    Ability:
+      title: Ability
+      type: object
+      properties:
+        Name:
+          type: string
+        Type:
+          type: integer
+        Power:
+          type: integer
+        Order:
+          type: integer
+        Description:
+          type: string
+        Era:
+          type: integer
+    Map:
+      title: Map
+      type: object
+      properties:
+        Name:
+          type: string
+        Difficulty:
+          type: integer
+    Upgrade:
+      title: Upgrade
+      type: object
+      properties:
+        Description:
+          type: string
+        Era:
+          type: integer
+        Map:
+          $ref: '#/components/schemas/Map'
+    OrbInfo:
+      title: OrbInfo
+      type: object
+      properties:
+        OrbCode:
+          type: string
+        Neutral:
+          type: integer
+        Frost:
+          type: integer
+        Fire:
+          type: integer
+        Nature:
+          type: integer
+        Shadow:
+          type: integer
+    Image:
+      title: Image
+      type: object
+      properties:
+        Name:
+          type: string
+        Type:
+          type: string
+        Collection:
+          type: string
+        Cache:
+          type: boolean
+        MaxAge:
+          type: integer
+        Url:
+          type: string
+        ObjectID:
+          type: string
+    Card:
+      title: Card
+      type: object
+      properties:
+        Name:
+          type: string
+        Rarity:
+          type: integer
+        Cost:
+          type: integer
+        Edition:
+          type: integer
+        Type:
+          type: integer
+        Color:
+          type: integer
+        Affinity:
+          type: integer
+        IsRanged:
+          type: boolean
+        Defense:
+          type: integer
+        Offense:
+          type: integer
+        DefenseType:
+          type: integer
+        OffenseType:
+          type: integer
+        UnitCount:
+          type: integer
+        ChargeCount:
+          type: integer
+        Category:
+          type: string
+        Abilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Ability'
+        Upgrades:
+          type: array
+          items:
+            $ref: '#/components/schemas/Upgrade'
+        OrbInfo:
+          $ref: '#/components/schemas/OrbInfo'
+        Extra:
+          type: string
+        Image:
+          $ref: '#/components/schemas/Image'
+    CardbaseResult:
+      title: CardbaseResult
+      type: object
+      properties:
+        Exception:
+          type: string
+        Result:
+          type: array
+          items:
+            $ref: '#/components/schemas/Card'
+        Success:
+          type: boolean

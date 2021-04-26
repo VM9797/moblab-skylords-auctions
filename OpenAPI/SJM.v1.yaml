@@ -1,0 +1,77 @@
+openapi: 3.0.0
+info:
+  title: SJM
+  version: '1.0'
+servers:
+  - url: 'https://smj.herokuapp.com/api'
+paths:
+  '/prices/{card-id}':
+    get:
+      summary: Get prices of card
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HistoryResponse'
+      operationId: get-prices
+    parameters:
+      - schema:
+          type: string
+        name: card-id
+        in: path
+        required: true
+  '/prices/noteworthy/{card-id}':
+    parameters:
+      - schema:
+          type: string
+        name: card-id
+        in: path
+        required: true
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NoteworthyPrices'
+      operationId: get-prices-noteworthy-card-id
+components:
+  schemas:
+    HistoryResponse:
+      title: HistoryResponse
+      type: object
+      properties:
+        priceData:
+          type: array
+          items:
+            $ref: '#/components/schemas/PriceData'
+        _id:
+          type: string
+    PriceData:
+      title: PriceData
+      type: object
+      properties:
+        time:
+          type: number
+        price:
+          type: number
+    NoteworthyPrices:
+      title: NoteworthyPrices
+      type: object
+      properties:
+        _id:
+          type: string
+        currentPrice:
+          $ref: '#/components/schemas/PriceData'
+        meanPrice:
+          $ref: '#/components/schemas/PriceData'
+        minPrice:
+          $ref: '#/components/schemas/PriceData'
+        maxPrice:
+          $ref: '#/components/schemas/PriceData'
