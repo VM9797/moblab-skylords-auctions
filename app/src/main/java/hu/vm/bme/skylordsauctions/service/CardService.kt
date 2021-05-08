@@ -54,8 +54,6 @@ class CardService @Inject constructor(private val cardbaseApi: CardbaseApi,
             it.smjId = smjId
         }
 
-        cardsWithImageName.forEach { Log.i("Skylords", it.smjId) }
-
         return cardsWithImageName
     }
 

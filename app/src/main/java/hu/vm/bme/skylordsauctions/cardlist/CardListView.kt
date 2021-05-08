@@ -8,4 +8,6 @@ interface CardListView: MvpView {
     fun logPriceInfo(noteworthyPrices: NoteworthyPrices)
 
     fun displayCardInfo(card: Card)
+
+    fun displayCards(cards: List<Card>)
 }

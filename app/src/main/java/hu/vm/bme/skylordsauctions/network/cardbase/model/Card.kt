@@ -12,6 +12,7 @@
 package hu.vm.bme.skylordsauctions.network.cardbase.model
 
 import com.google.gson.annotations.SerializedName
+import hu.vm.bme.skylordsauctions.network.NetworkConfig
 
 data class Card (
     @SerializedName("Name") val name: kotlin.String? = null,
@@ -36,4 +37,7 @@ data class Card (
     @SerializedName("Image") val image: Image? = null
 ) {
     lateinit var smjId: String
+
+    val imageUrl
+        get() = "${NetworkConfig.imageBaseUrl}${image?.url}"
 }

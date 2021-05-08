@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">SkylordsAuctions</string>
+    <string name="rarity">Rarity:</string>
+    <string name="placeholder">PLACEHOLDER</string>
+    <string name="category">Category:</string>
+    <string name="tier">Tier:</string>
+    <string name="affinity">Affinity:</string>
+    <string name="attack">Attack:</string>
+    <string name="defense">Defense:</string>
+    <string name="attack_type">Attack type:</string>
+    <string name="defense_type">Defense type:</string>
+    <string name="edition">Edition:</string>
+    <string name="ability_type">Ability type:</string>
 </resources>

@@ -4,6 +4,198 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="12dp"
     tools:context=".carddetails.CardDetailsActivity">
+
+    <ImageView
+        android:id="@+id/ivCardDetail"
+        android:layout_width="214dp"
+        android:layout_height="300dp"
+        android:adjustViewBounds="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <View
+        android:id="@+id/vSeparator"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivCardDetail"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/vSeparator"
+        android:layout_marginTop="12dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rarity"/>
+
+            <TextView
+                android:id="@+id/tvRarity"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/category"/>
+
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tier"/>
+
+            <TextView
+                android:id="@+id/tvTier"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/affinity"/>
+
+            <TextView
+                android:id="@+id/tvAffinity"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/attack"/>
+
+            <TextView
+                android:id="@+id/tvAttack"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/attack_type"/>
+
+            <TextView
+                android:id="@+id/tvAttackType"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/defense"/>
+
+            <TextView
+                android:id="@+id/tvDefense"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/defense_type"/>
+
+            <TextView
+                android:id="@+id/tvDefenseType"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edition"/>
+
+            <TextView
+                android:id="@+id/tvEdition"
+                android:layout_marginStart="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/placeholder"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
