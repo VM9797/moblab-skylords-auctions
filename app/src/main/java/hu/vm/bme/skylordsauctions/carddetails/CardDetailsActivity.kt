@@ -1,11 +1,16 @@
 package hu.vm.bme.skylordsauctions.carddetails
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import hu.vm.bme.skylordsauctions.R
+import hu.vm.bme.skylordsauctions.addauction.AddAuctionActivity
+import hu.vm.bme.skylordsauctions.auctions.AuctionsActivity
 import hu.vm.bme.skylordsauctions.common.*
 import hu.vm.bme.skylordsauctions.network.cardbase.model.Card
 import hu.vm.bme.skylordsauctions.util.CARD_DETAILS_CARD_NAME
@@ -18,6 +23,8 @@ class CardDetailsActivity : AppCompatActivity(), CardDetailsView {
     @Inject
     lateinit var presenter: CardDetailsPresenter
 
+    private lateinit var cardName: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -25,8 +32,11 @@ class CardDetailsActivity : AppCompatActivity(), CardDetailsView {
         injector.inject(this)
         presenter.attachView(this)
 
-        val cardName = intent.getStringExtra(CARD_DETAILS_CARD_NAME) ?: throw RuntimeException("Card name is mandatory for card details")
+        cardName = intent.getStringExtra(CARD_DETAILS_CARD_NAME) ?: throw RuntimeException("Card name is mandatory for card details")
         presenter.getCard(cardName)
+
+        findViewById<FloatingActionButton>(R.id.fabAddAuction).setOnClickListener { launchAddAuctionActivity() }
+        findViewById<Button>(R.id.btnPriceInfo).setOnClickListener { launchAuctionsActivity() }
     }
 
     override fun onDestroy() {
@@ -50,5 +60,20 @@ class CardDetailsActivity : AppCompatActivity(), CardDetailsView {
         findViewById<TextView>(R.id.tvAttackType).text = "${OffenseType.parseInt(card.offenseType)}"
         findViewById<TextView>(R.id.tvDefenseType).text = "${DefenseType.parseInt(card.defenseType)}"
         findViewById<TextView>(R.id.tvEdition).text = "${Edition.parseInt(card.edition)}"
+    }
+
+    private fun <T> launchActivity(cls: Class<T>) {
+        val intent = Intent(this, cls).apply {
+            putExtra(CARD_DETAILS_CARD_NAME, cardName)
+        }
+        startActivity(intent)
+    }
+
+    private fun launchAuctionsActivity() {
+        launchActivity(AuctionsActivity::class.java)
+    }
+
+    private fun launchAddAuctionActivity() {
+        launchActivity(AddAuctionActivity::class.java)
     }
 }

@@ -18,7 +18,7 @@ package hu.vm.bme.skylordsauctions.network.smj.model
  */
 data class HistoryResponse (
 
-    val priceData: kotlin.Array<PriceData>? = null,
-    val id: kotlin.String? = null
+    val priceData: List<PriceData> = emptyList(),
+    val id: String = ""
 ) {
 }

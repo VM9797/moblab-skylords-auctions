@@ -19,7 +19,7 @@ package hu.vm.bme.skylordsauctions.network.smj.model
  */
 data class PriceData (
 
-    val time: java.math.BigDecimal? = null,
-    val price: java.math.BigDecimal? = null
+    val time: Long = 0L,
+    val price: Int = 0
 ) {
 }

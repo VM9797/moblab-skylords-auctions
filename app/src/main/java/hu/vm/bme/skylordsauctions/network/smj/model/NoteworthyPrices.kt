@@ -21,10 +21,10 @@ package hu.vm.bme.skylordsauctions.network.smj.model
  */
 data class NoteworthyPrices (
 
-    val _id: kotlin.String? = null,
-    val currentPrice: PriceData? = null,
-    val meanPrice: PriceData? = null,
-    val minPrice: PriceData? = null,
-    val maxPrice: PriceData? = null
+    val _id: kotlin.String = "",
+    val currentPrice: PriceData = PriceData(),
+    val meanPrice: PriceData = PriceData(),
+    val minPrice: PriceData = PriceData(),
+    val maxPrice: PriceData = PriceData()
 ) {
 }

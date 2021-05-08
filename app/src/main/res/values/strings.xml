@@ -11,4 +11,13 @@
     <string name="defense_type">Defense type:</string>
     <string name="edition">Edition:</string>
     <string name="ability_type">Ability type:</string>
+    <string name="price_info">Price info</string>
+    <string name="last_minimum_price">Last minimum price</string>
+    <string name="mean_minimum_price">Mean minimum price</string>
+    <string name="lowest_minimum_price">Lowest minimum price</string>
+    <string name="highest_minimum_price">Highest minimum price</string>
+    <string name="starting_bid">Starting bid</string>
+    <string name="buyout_price">Buyout price</string>
+    <string name="auction_length">Auction length</string>
+    <string name="create_auction">Create auction</string>
 </resources>

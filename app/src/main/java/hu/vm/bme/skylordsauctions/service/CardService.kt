@@ -5,6 +5,7 @@ import hu.vm.bme.skylordsauctions.data.AppDatabase
 import hu.vm.bme.skylordsauctions.network.cardbase.CardbaseApi
 import hu.vm.bme.skylordsauctions.network.cardbase.model.Card
 import hu.vm.bme.skylordsauctions.network.smj.SmjApi
+import hu.vm.bme.skylordsauctions.network.smj.model.HistoryResponse
 import hu.vm.bme.skylordsauctions.network.smj.model.NoteworthyPrices
 import java.lang.RuntimeException
 import javax.inject.Inject
@@ -14,6 +15,8 @@ import javax.inject.Singleton
 class CardService @Inject constructor(private val cardbaseApi: CardbaseApi,
                                       private val smjApi: SmjApi,
                                       private val appDatabase: AppDatabase) {
+
+    private var cards: List<Card> = emptyList()
 
     companion object {
         private val finalStepSmjMappings = mapOf(
@@ -28,6 +31,10 @@ class CardService @Inject constructor(private val cardbaseApi: CardbaseApi,
     }
 
     suspend fun getDisplayableCards(): List<Card> {
+        if (cards.isNotEmpty()) {
+            return cards
+        }
+
         val cardsWithImageName = cardbaseApi.getCardList().result?.filter { it.image?.name != null } ?: emptyList()
 
         cardsWithImageName.forEach {
@@ -54,10 +61,15 @@ class CardService @Inject constructor(private val cardbaseApi: CardbaseApi,
             it.smjId = smjId
         }
 
-        return cardsWithImageName
+        cards = cardsWithImageName
+        return cards
     }
 
     suspend fun getNoteworthyPricesForCard(cardId: String): NoteworthyPrices {
         return smjApi.getNoteworthyPricesForCard(cardId).first()
+    }
+
+    suspend fun getAuctionHistoryForCard(cardId: String): HistoryResponse {
+        return smjApi.getPriceHistoryForCard(cardId)
     }
 }
