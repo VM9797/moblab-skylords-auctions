@@ -51,10 +51,6 @@ class CardService @Inject constructor(private val cardbaseApi: CardbaseApi,
                 smjId = smjId.substring(0..smjId.length-3) + "-g"
             }
 
-            if (smjId.endsWith("-f")) {
-                smjId = smjId.substring(0..smjId.length-3) + "-r"
-            }
-
             if (finalStepSmjMappings.containsKey(smjId)) {
                 smjId = finalStepSmjMappings.getValue(smjId)
             }

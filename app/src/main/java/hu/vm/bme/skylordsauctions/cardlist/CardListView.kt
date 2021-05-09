@@ -5,9 +5,5 @@ import hu.vm.bme.skylordsauctions.network.cardbase.model.Card
 import hu.vm.bme.skylordsauctions.network.smj.model.NoteworthyPrices
 
 interface CardListView: MvpView {
-    fun logPriceInfo(noteworthyPrices: NoteworthyPrices)
-
-    fun displayCardInfo(card: Card)
-
     fun displayCards(cards: List<Card>)
 }

@@ -15,6 +15,6 @@ class CardDetailsPresenter @Inject constructor(private val interactor: CardDetai
     fun getCard(cardName: String) = onIO {
         val card = interactor.getCardByName(cardName)
 
-        onMain { view?.displayCardDetails(card) }
+        onMain { view?.displayCardDetails(card) }.join()
     }
 }

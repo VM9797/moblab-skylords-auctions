@@ -13,9 +13,6 @@ import javax.inject.Singleton
 
 @Singleton
 class CardListInteractor @Inject constructor(private val cardService: CardService) {
-    suspend fun getNoteworthyPricesForCard(card: Card): NoteworthyPrices {
-        return cardService.getNoteworthyPricesForCard(card.smjId)
-    }
 
     suspend fun getAllCards(): List<Card> {
         return cardService.getDisplayableCards()

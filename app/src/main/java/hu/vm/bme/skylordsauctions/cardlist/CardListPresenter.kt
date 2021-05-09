@@ -13,16 +13,11 @@ import kotlin.coroutines.CoroutineContext
 
 class CardListPresenter @Inject constructor(private val cardListInteractor: CardListInteractor): Presenter<CardListView>() {
 
-    fun getNoteworthyPricesForCard(card: Card) = GlobalScope.launch(Dispatchers.IO) {
-        val prices = cardListInteractor.getNoteworthyPricesForCard(card)
-        view?.logPriceInfo(prices)
-    }
-
     fun loadAllCards() = GlobalScope.launch(Dispatchers.IO) {
         val cards = cardListInteractor.getAllCards()
 
         GlobalScope.launch(Dispatchers.Main) {
             view?.displayCards(cards)
-        }
+        }.join()
     }
 }

@@ -48,14 +48,6 @@ class CardListActivity: AppCompatActivity(), CardListView {
         cardListPresenter.detachView()
     }
 
-    override fun logPriceInfo(noteworthyPrices: NoteworthyPrices) {
-        Log.i("Skylords", noteworthyPrices.toString())
-    }
-
-    override fun displayCardInfo(card: Card) {
-        cardListPresenter.getNoteworthyPricesForCard(card)
-    }
-
     override fun displayCards(cards: List<Card>) {
         rvAdapter.items = cards
         rvAdapter.notifyDataSetChanged()

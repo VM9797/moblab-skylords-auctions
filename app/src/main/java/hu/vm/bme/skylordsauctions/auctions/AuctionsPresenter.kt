@@ -12,6 +12,6 @@ class AuctionsPresenter @Inject constructor(private val interactor: AuctionsInte
     fun loadAuctionDetails(cardName: String) = onIO {
         val auctionDetails = interactor.getAuctionDetails(cardName)
 
-        onMain { view?.displayAuctionDetails(auctionDetails) }
+        onMain { view?.displayAuctionDetails(auctionDetails) }.join()
     }
 }

@@ -40,4 +40,6 @@ data class Card (
 
     val imageUrl
         get() = "${NetworkConfig.imageBaseUrl}${image?.url}"
+
+    fun isSmjIdInitialized() = this::smjId.isInitialized
 }
