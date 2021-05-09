@@ -1,6 +1,7 @@
 package hu.vm.bme.skylordsauctions.service
 
 import android.util.Log
+import hu.vm.bme.skylordsauctions.data.AppDaoProvider
 import hu.vm.bme.skylordsauctions.data.AppDatabase
 import hu.vm.bme.skylordsauctions.network.cardbase.CardbaseApi
 import hu.vm.bme.skylordsauctions.network.cardbase.model.Card
@@ -14,7 +15,7 @@ import javax.inject.Singleton
 @Singleton
 class CardService @Inject constructor(private val cardbaseApi: CardbaseApi,
                                       private val smjApi: SmjApi,
-                                      private val appDatabase: AppDatabase) {
+                                      private val daoProvider: AppDaoProvider) {
 
     private var cards: List<Card> = emptyList()
 

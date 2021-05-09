@@ -10,7 +10,7 @@ import hu.vm.bme.skylordsauctions.network.NetworkModule
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [CardListModule::class, NetworkModule::class, DataModule::class])
+@Component(modules = [NetworkModule::class, DataModule::class])
 interface ApplicationComponent {
     fun inject(cardListActivity: CardListActivity)
     fun inject(cardDetailsActivity: CardDetailsActivity)

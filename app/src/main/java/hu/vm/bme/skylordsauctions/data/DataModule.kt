@@ -10,5 +10,13 @@ class DataModule(private val application: SkylordsApplication) {
 
     @Provides
     @Singleton
-    fun provideAppDatabase() = AppDatabase.getInstance(application)
+    fun provideAppDatabase(): AppDatabase {
+      return AppDatabase.getInstance(application)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAppDaoProvider(appDatabase: AppDatabase): AppDaoProvider {
+        return appDatabase
+    }
 }

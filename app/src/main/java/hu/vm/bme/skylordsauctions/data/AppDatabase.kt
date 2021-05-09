@@ -6,9 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(entities = [CardNameIdMapping::class], version = 1)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase: AppDaoProvider, RoomDatabase() {
 
-    abstract fun cardNameIdMappingDao(): CardNameIdMappingDAO
+    abstract override fun cardNameIdMappingDao(): CardNameIdMappingDAO
 
     companion object {
         @Volatile
