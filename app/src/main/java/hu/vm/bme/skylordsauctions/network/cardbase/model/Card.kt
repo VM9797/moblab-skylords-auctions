@@ -36,10 +36,9 @@ data class Card (
     @SerializedName("Extra") val extra: kotlin.String? = null,
     @SerializedName("Image") val image: Image? = null
 ) {
-    lateinit var smjId: String
-
     val imageUrl
         get() = "${NetworkConfig.imageBaseUrl}${image?.url}"
 
-    fun isSmjIdInitialized() = this::smjId.isInitialized
+    val imageName
+        get() = image?.name ?: throw RuntimeException("Image name of card $name does not exist")
 }

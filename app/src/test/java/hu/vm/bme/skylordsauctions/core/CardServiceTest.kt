@@ -1,18 +1,15 @@
 package hu.vm.bme.skylordsauctions.core
 
+import hu.vm.bme.skylordsauctions.DaoMock
 import hu.vm.bme.skylordsauctions.assertCollectionEquals
-import hu.vm.bme.skylordsauctions.data.AppDaoProvider
-import hu.vm.bme.skylordsauctions.data.MockCardbaseResult
-import hu.vm.bme.skylordsauctions.data.MockNoteworthyPrices
-import hu.vm.bme.skylordsauctions.data.MockPriceHistory
+import hu.vm.bme.skylordsauctions.data.*
 import hu.vm.bme.skylordsauctions.network.cardbase.CardbaseApi
 import hu.vm.bme.skylordsauctions.network.smj.SmjApi
 import hu.vm.bme.skylordsauctions.service.CardService
 import kotlinx.coroutines.runBlocking
-import org.junit.Test
-
 import org.junit.Assert.*
 import org.junit.Before
+import org.junit.Test
 import org.mockito.Mockito.*
 
 /**
@@ -39,6 +36,7 @@ class CardServiceTest {
     @Test
     fun cardsShouldBeCached() {
         runBlocking {
+            `when`(daoMock.cardNameIdMappingDao()).thenReturn(DaoMock())
             `when`(cardbaseMock.getCardList()).thenReturn(MockCardbaseResult.result)
             cardService.getDisplayableCards()
             cardService.getDisplayableCards()
@@ -51,11 +49,21 @@ class CardServiceTest {
     fun smjCardNamesShouldBeSet() {
         runBlocking {
             `when`(cardbaseMock.getCardList()).thenReturn(MockCardbaseResult.result)
+            `when`(daoMock.cardNameIdMappingDao()).thenReturn(DaoMock())
 
             val cards = cardService.getDisplayableCards()
 
-            val anyCardWithoutSmjId = cards.any { !it.isSmjIdInitialized() }
-            assert(!anyCardWithoutSmjId)
+            var exception: Exception? = null
+
+            for (card in cards) {
+                try {
+                    cardService.getCardSmjIdPairByCardName(card.imageName)
+                } catch (e: Exception) {
+                    exception = e
+                }
+            }
+
+            assertNull(exception)
         }
     }
 
@@ -63,36 +71,55 @@ class CardServiceTest {
     fun smjCardNamesShouldBeCorrect() {
         runBlocking {
             `when`(cardbaseMock.getCardList()).thenReturn(MockCardbaseResult.result)
+            `when`(daoMock.cardNameIdMappingDao()).thenReturn(DaoMock())
 
-            val smjCardNames = cardService.getDisplayableCards().map { it.smjId }
+            val smjIds = cardService.getDisplayableCards()
+                .map { cardService.getCardSmjIdPairByCardName(it.imageName) }
+                .map { it.second }
 
-            assertCollectionEquals(listOf("abomination-b", "amii-monument", "shaman", "protector's-seal-ls", "banditos-g"), smjCardNames)
+            val expectedSmjIds = listOf("abomination-b", "amii-monument", "shaman", "protector's-seal-ls", "banditos-g")
+
+            assertCollectionEquals(expectedSmjIds, smjIds)
         }
     }
 
     @Test
     fun noteworthyPricesShouldBeFetchedByCardName() {
-        val cardName = "abomination-b"
+        val cardName = "Abomination [B]"
         runBlocking {
             `when`(cardbaseMock.getCardList()).thenReturn(MockCardbaseResult.result)
             `when`(smjMock.getNoteworthyPricesForCard(cardName)).thenReturn(listOf(MockNoteworthyPrices.abominationPrices))
+            `when`(daoMock.cardNameIdMappingDao()).thenReturn(DaoMock())
 
             val noteworthyPrices = cardService.getNoteworthyPricesForCard(cardName)
 
-            assertEquals(cardName, noteworthyPrices._id)
+            assertEquals(MockCardNameMappings.abominationMapping.smjCardId, noteworthyPrices._id)
         }
     }
 
     @Test
     fun priceHistoryShouldBeFetchedForCard() {
-        val cardName = "abomination-b"
+        val cardName = "Abomination [B]"
         runBlocking {
             `when`(cardbaseMock.getCardList()).thenReturn(MockCardbaseResult.result)
             `when`(smjMock.getPriceHistoryForCard(cardName)).thenReturn(MockPriceHistory.abominationPriceHistory)
+            `when`(daoMock.cardNameIdMappingDao()).thenReturn(DaoMock())
 
             val history = cardService.getAuctionHistoryForCard(cardName)
+            assertEquals(MockCardNameMappings.abominationMapping.smjCardId, history.id)
+        }
+    }
 
-            assertEquals(cardName, history.id)
+    @Test
+    fun getMappingPairShouldThrowWhenInvalidCardNameIsProvided() {
+        runBlocking {
+            `when`(daoMock.cardNameIdMappingDao()).thenReturn(DaoMock())
+
+            assertThrows(RuntimeException::class.java) {
+                runBlocking {
+                    cardService.getCardSmjIdPairByCardName("Invalid card name")
+                }
+            }
         }
     }
 }

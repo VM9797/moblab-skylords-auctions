@@ -10,7 +10,8 @@ import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.Mockito.*
 
@@ -20,12 +21,12 @@ class CardDetailsMvpTest {
     fun interactorShouldReturnTheCorrectCard() {
         val mockCardService = mock(CardService::class.java)
         val interactor = CardDetailsInteractor(mockCardService)
-        val cardList = listOf(MockCards.abomination.apply { smjId = "abomination-b" })
+        val cardList = listOf(MockCards.abomination)
 
         runBlocking {
             `when`(mockCardService.getDisplayableCards()).thenReturn(cardList)
 
-            assertEquals(cardList.first().smjId, interactor.getCardByName("abomination-b").smjId)
+            assertEquals(cardList.first().imageName, interactor.getCardByName("Abomination [B]").imageName)
         }
     }
 
@@ -33,7 +34,7 @@ class CardDetailsMvpTest {
     fun interactorShouldThrowAnExceptionWhenCardIsNotFound() {
         val mockCardService = mock(CardService::class.java)
         val interactor = CardDetailsInteractor(mockCardService)
-        val cardList = listOf(MockCards.abomination.apply { smjId = "abomination-b" })
+        val cardList = listOf(MockCards.abomination)
 
         runBlocking {
             `when`(mockCardService.getDisplayableCards()).thenReturn(cardList)
@@ -59,8 +60,8 @@ class CardDetailsMvpTest {
         val card = MockCards.abomination
 
         runBlocking {
-            `when`(interactor.getCardByName("abomination-b")).thenReturn(card)
-            val job = presenter.getCard("abomination-b")
+            `when`(interactor.getCardByName("Abomination [B]")).thenReturn(card)
+            val job = presenter.getCard("Abomination [B]")
             job.join()
 
             assertEquals(1, mockingDetails(view).invocations.size)

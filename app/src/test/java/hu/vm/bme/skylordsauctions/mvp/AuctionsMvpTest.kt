@@ -5,6 +5,7 @@ import hu.vm.bme.skylordsauctions.auctions.AuctionDetails
 import hu.vm.bme.skylordsauctions.auctions.AuctionsInteractor
 import hu.vm.bme.skylordsauctions.auctions.AuctionsPresenter
 import hu.vm.bme.skylordsauctions.auctions.AuctionsView
+import hu.vm.bme.skylordsauctions.data.MockCardNameMappings
 import hu.vm.bme.skylordsauctions.data.MockCards
 import hu.vm.bme.skylordsauctions.data.MockNoteworthyPrices
 import hu.vm.bme.skylordsauctions.data.MockPriceHistory
@@ -14,12 +15,13 @@ import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertThrows
 import org.junit.Test
 import org.mockito.Mockito.*
-import org.junit.Assert.*
 
 class AuctionsMvpTest {
-    val cardName = "abomination-b"
+    val cardName = "Abomination [B]"
 
     @Test
     fun interactorShouldThrowExceptionIfCardDoesNotExist() {
@@ -27,9 +29,7 @@ class AuctionsMvpTest {
         val interactor = AuctionsInteractor(mockCardService)
 
         runBlocking {
-            `when`(mockCardService.getDisplayableCards()).thenReturn(listOf(MockCards.abomination.apply {
-                smjId = cardName
-            }))
+            `when`(mockCardService.getCardSmjIdPairByCardName("Invalid card name")).thenThrow(NoSuchElementException::class.java)
 
             assertThrows(NoSuchElementException::class.java) {
                 runBlocking { interactor.getAuctionDetails("Invalid card name") }
@@ -41,15 +41,12 @@ class AuctionsMvpTest {
     fun interactorShouldGroupHistoryByDay() {
         val mockCardService = mock(CardService::class.java)
         val interactor = AuctionsInteractor(mockCardService)
+        val smjId = MockCardNameMappings.abominationMappingPair.second
 
         runBlocking {
-            `when`(mockCardService.getDisplayableCards()).thenReturn(listOf(MockCards.abomination.apply {
-                smjId = cardName
-            }))
-            `when`(mockCardService.getNoteworthyPricesForCard(cardName)).thenReturn(
-                MockNoteworthyPrices.abominationPrices
-            )
-            `when`(mockCardService.getAuctionHistoryForCard(cardName)).thenReturn(MockPriceHistory.abominationPriceHistory)
+            `when`(mockCardService.getCardSmjIdPairByCardName(cardName)).thenReturn(MockCardNameMappings.abominationMappingPair)
+            `when`(mockCardService.getNoteworthyPricesForCard(smjId)).thenReturn(MockNoteworthyPrices.abominationPrices)
+            `when`(mockCardService.getAuctionHistoryForCard(smjId)).thenReturn(MockPriceHistory.abominationPriceHistory)
 
             val auctionDetails = interactor.getAuctionDetails(cardName)
 
@@ -61,15 +58,14 @@ class AuctionsMvpTest {
     fun interactorShouldReturnTheLowestPriceDataOfDay() {
         val mockCardService = mock(CardService::class.java)
         val interactor = AuctionsInteractor(mockCardService)
+        val smjId = MockCardNameMappings.abominationMappingPair.second
 
         runBlocking {
-            `when`(mockCardService.getDisplayableCards()).thenReturn(listOf(MockCards.abomination.apply {
-                smjId = cardName
-            }))
-            `when`(mockCardService.getNoteworthyPricesForCard(cardName)).thenReturn(
+            `when`(mockCardService.getCardSmjIdPairByCardName(cardName)).thenReturn(MockCardNameMappings.abominationMappingPair)
+            `when`(mockCardService.getNoteworthyPricesForCard(smjId)).thenReturn(
                 MockNoteworthyPrices.abominationPrices
             )
-            `when`(mockCardService.getAuctionHistoryForCard(cardName)).thenReturn(MockPriceHistory.abominationPriceHistory)
+            `when`(mockCardService.getAuctionHistoryForCard(smjId)).thenReturn(MockPriceHistory.abominationPriceHistory)
 
             val auctionDetails = interactor.getAuctionDetails(cardName)
 

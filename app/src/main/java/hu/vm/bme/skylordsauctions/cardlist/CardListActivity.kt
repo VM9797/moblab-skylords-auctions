@@ -2,20 +2,14 @@ package hu.vm.bme.skylordsauctions.cardlist
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import hu.vm.bme.skylordsauctions.R
 import hu.vm.bme.skylordsauctions.carddetails.CardDetailsActivity
 import hu.vm.bme.skylordsauctions.network.cardbase.model.Card
-import hu.vm.bme.skylordsauctions.network.smj.SmjApi
-import hu.vm.bme.skylordsauctions.network.smj.model.NoteworthyPrices
 import hu.vm.bme.skylordsauctions.util.CARD_DETAILS_CARD_NAME
 import hu.vm.bme.skylordsauctions.util.injector
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class CardListActivity: AppCompatActivity(), CardListView {
@@ -55,7 +49,7 @@ class CardListActivity: AppCompatActivity(), CardListView {
 
     private fun launchCardDetailsActivity(card: Card) {
         Intent(this, CardDetailsActivity::class.java).apply {
-            putExtra(CARD_DETAILS_CARD_NAME, card.smjId)
+            putExtra(CARD_DETAILS_CARD_NAME, card.imageName)
             startActivity(this)
         }
     }

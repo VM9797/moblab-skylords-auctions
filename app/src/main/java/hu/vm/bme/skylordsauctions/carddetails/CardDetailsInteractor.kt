@@ -9,6 +9,6 @@ import javax.inject.Singleton
 class CardDetailsInteractor @Inject constructor(private val cardService: CardService) {
 
     suspend fun getCardByName(cardName: String): Card {
-        return cardService.getDisplayableCards().first { it.smjId == cardName }
+        return cardService.getDisplayableCards().first { it.imageName == cardName }
     }
 }

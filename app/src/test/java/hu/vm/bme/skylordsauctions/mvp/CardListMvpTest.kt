@@ -10,9 +10,9 @@ import kotlinx.coroutines.newSingleThreadContext
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.mockito.Mockito.*
-import org.junit.Assert.*
 
 class CardListMvpTest {
 

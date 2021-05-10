@@ -1,14 +1,12 @@
 package hu.vm.bme.skylordsauctions.service
 
-import android.util.Log
 import hu.vm.bme.skylordsauctions.data.AppDaoProvider
-import hu.vm.bme.skylordsauctions.data.AppDatabase
+import hu.vm.bme.skylordsauctions.data.CardNameIdMapping
 import hu.vm.bme.skylordsauctions.network.cardbase.CardbaseApi
 import hu.vm.bme.skylordsauctions.network.cardbase.model.Card
 import hu.vm.bme.skylordsauctions.network.smj.SmjApi
 import hu.vm.bme.skylordsauctions.network.smj.model.HistoryResponse
 import hu.vm.bme.skylordsauctions.network.smj.model.NoteworthyPrices
-import java.lang.RuntimeException
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -38,7 +36,7 @@ class CardService @Inject constructor(private val cardbaseApi: CardbaseApi,
 
         val cardsWithImageName = cardbaseApi.getCardList().result?.filter { it.image?.name != null } ?: emptyList()
 
-        cardsWithImageName.forEach {
+        val mappings = cardsWithImageName.map {
             var smjId = it.image?.name ?: throw RuntimeException("This should not be possible")
 
             smjId = smjId.replace("[", "")
@@ -55,11 +53,30 @@ class CardService @Inject constructor(private val cardbaseApi: CardbaseApi,
                 smjId = finalStepSmjMappings.getValue(smjId)
             }
 
-            it.smjId = smjId
+            CardNameIdMapping(it.imageName, smjId)
         }
+
+        val dao = daoProvider.cardNameIdMappingDao()
+        val dbMappings = dao.getAllMappings()
+
+        val missingDbMappings = mappings.filter { mapping ->
+            dbMappings.find { it.cardName == mapping.cardName } == null
+        }
+
+        dao.insertMappings(*missingDbMappings.toTypedArray())
 
         cards = cardsWithImageName
         return cards
+    }
+
+    suspend fun getCardSmjIdPairByCardName(cardName: String): Pair<Card, String> {
+        val cardNameMapping = daoProvider.cardNameIdMappingDao().getMappingByCardName(cardName)
+            ?: throw RuntimeException("Card name mapping does not exist for card name $cardName")
+
+        val card = getDisplayableCards().find { it.imageName == cardName }
+            ?: throw RuntimeException("Could not find card with name $cardName")
+
+        return Pair(card, cardNameMapping.smjCardId)
     }
 
     suspend fun getNoteworthyPricesForCard(cardId: String): NoteworthyPrices {
