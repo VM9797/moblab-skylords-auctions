@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "257056200372",
+    "project_id": "skylords-auctions-ml",
+    "storage_bucket": "skylords-auctions-ml.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257056200372:android:b21a38cc40c61d1675e9e1",
+        "android_client_info": {
+          "package_name": "hu.vm.bme.skylordsauctions"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "257056200372-gm7os8r31u8htm1gi7be7co2nhp2qk28.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBJHe0cDdRItQVPt4jZcBb1Iw7iNasYgc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "257056200372-gm7os8r31u8htm1gi7be7co2nhp2qk28.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
